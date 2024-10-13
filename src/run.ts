@@ -75,6 +75,7 @@ async function initFiles() {
         items.map(item => cp(
             join(ownDir, 'demo', item),
             join(targetDir, item),
+            {recursive: true},
         )),
     );
 }
