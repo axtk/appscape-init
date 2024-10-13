@@ -40,16 +40,16 @@ async function initPackageJSON() {
     }
     catch {}
 
-    value.scripts = {
-        ...scripts,
-        ...(typeof value.scripts === 'object' ? value.scripts : undefined),
-    };
-
     if (!value.name)
         value.name = basename(targetDir);
 
     if (!value.version)
         value.version = '0.0.1';
+
+    value.scripts = {
+        ...scripts,
+        ...(typeof value.scripts === 'object' ? value.scripts : undefined),
+    };
 
     try {
         await access(targetDir);
@@ -72,7 +72,10 @@ async function initFiles() {
     let items = await readdir(join(ownDir, 'demo'));
 
     await Promise.all(
-        items.map(item => cp(join(ownDir, 'demo', item), targetDir)),
+        items.map(item => cp(
+            join(ownDir, 'demo', item),
+            join(targetDir, item),
+        )),
     );
 }
 
