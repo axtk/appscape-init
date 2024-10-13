@@ -63,9 +63,8 @@ async function initPackageJSON() {
         JSON.stringify(value, null, getJSONTabSize(content)),
     );
 
-    await execAsync(`cd ${targetDir}`);
-    await execAsync(`npm i ${deps.join(' ')}`);
-    await execAsync(`npm i -D ${devDeps.join(' ')}`);
+    await execAsync(`npm i --prefix ${targetDir} ${deps.join(' ')}`);
+    await execAsync(`npm i -D --prefix ${targetDir} ${devDeps.join(' ')}`);
 }
 
 async function initFiles() {
