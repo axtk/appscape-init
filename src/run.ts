@@ -2,7 +2,7 @@
 import {cp, readdir, readFile, writeFile} from 'node:fs/promises';
 import {exec} from 'node:child_process';
 import {promisify} from 'node:util';
-import {dirname, join} from 'node:path';
+import {basename, dirname, join} from 'node:path';
 import scripts from './scripts.json';
 
 const execAsync = promisify(exec);
@@ -28,17 +28,33 @@ function getJSONTabSize(s: string) {
 
 async function initPackageJSON() {
     let path = join(projectDir, 'package.json');
-    let content = (await readFile(path)).toString();
+    let content = '', value: Record<string, unknown> = {};
 
-    let tabSize = getJSONTabSize(content);
-    let value = JSON.parse(content);
+    try {
+        content = (await readFile(path)).toString();
+    }
+    catch {}
+
+    try {
+        value = JSON.parse(content);
+    }
+    catch {}
 
     value.scripts = {
         ...scripts,
-        ...value.scripts,
+        ...(typeof value.scripts === 'object' ? value.scripts : undefined),
     };
 
-    await writeFile(path, JSON.stringify(value, null, tabSize));
+    if (!value.name)
+        value.name = basename(projectDir);
+
+    if (!value.version)
+        value.version = '0.0.1';
+
+    await writeFile(
+        path,
+        JSON.stringify(value, null, getJSONTabSize(content)),
+    );
 
     await execAsync(`cd ${projectDir}`);
     await execAsync(`npm i ${deps.join(' ')}`);
