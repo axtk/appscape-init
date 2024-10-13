@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {cp, readdir, readFile, writeFile} from 'node:fs/promises';
+import {access, cp, mkdir, readdir, readFile, writeFile} from 'node:fs/promises';
 import {exec} from 'node:child_process';
 import {promisify} from 'node:util';
 import {basename, dirname, join} from 'node:path';
@@ -50,6 +50,13 @@ async function initPackageJSON() {
 
     if (!value.version)
         value.version = '0.0.1';
+
+    try {
+        await access(targetDir);
+    }
+    catch {
+        await mkdir(targetDir, {recursive: true});
+    }
 
     await writeFile(
         path,
