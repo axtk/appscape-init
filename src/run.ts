@@ -8,7 +8,7 @@ import scripts from './scripts.json';
 const execAsync = promisify(exec);
 
 let ownDir = dirname(require.resolve('appscape-init/package.json'));
-let projectDir = process.cwd();
+let targetDir = process.cwd();
 
 const deps = [
     'express',
@@ -27,7 +27,7 @@ function getJSONTabSize(s: string) {
 }
 
 async function initPackageJSON() {
-    let path = join(projectDir, 'package.json');
+    let path = join(targetDir, 'package.json');
     let content = '', value: Record<string, unknown> = {};
 
     try {
@@ -46,7 +46,7 @@ async function initPackageJSON() {
     };
 
     if (!value.name)
-        value.name = basename(projectDir);
+        value.name = basename(targetDir);
 
     if (!value.version)
         value.version = '0.0.1';
@@ -56,7 +56,7 @@ async function initPackageJSON() {
         JSON.stringify(value, null, getJSONTabSize(content)),
     );
 
-    await execAsync(`cd ${projectDir}`);
+    await execAsync(`cd ${targetDir}`);
     await execAsync(`npm i ${deps.join(' ')}`);
     await execAsync(`npm i -D ${devDeps.join(' ')}`);
 }
@@ -65,7 +65,7 @@ async function initFiles() {
     let items = await readdir(join(ownDir, 'demo'));
 
     await Promise.all(
-        items.map(item => cp(join(ownDir, 'demo', item), projectDir)),
+        items.map(item => cp(join(ownDir, 'demo', item), targetDir)),
     );
 }
 
@@ -73,7 +73,7 @@ export async function run() {
     let args = process.argv.slice(2);
 
     if (args[0])
-        projectDir = args[0];
+        targetDir = args[0];
 
     await initPackageJSON();
     await initFiles();
