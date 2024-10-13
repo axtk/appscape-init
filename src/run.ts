@@ -15,6 +15,7 @@ const deps = [
 ];
 
 const devDeps = [
+    '@types/express',
     '@types/node',
     'appscape',
     'cross-env',
