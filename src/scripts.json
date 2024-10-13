@@ -1,0 +1,10 @@
+{
+    "build": "appscape --build",
+    "build-prod": "appscape --build --silent",
+    "clean": "appscape --clean",
+    "dev": "npm-run-all clean watch",
+    "prod": "cross-env NODE_ENV=production APP_HOST=127.0.0.1 APP_PORT=3000 npm-run-all clean build-prod serve",
+    "serve": "node dist/server/app.js",
+    "start": "npm run dev",
+    "watch": "nodemon --watch src --exec \"cross-env NODE_ENV=development npm-run-all build serve\" -e *"
+}
