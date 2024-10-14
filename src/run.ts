@@ -89,12 +89,17 @@ export async function run() {
     if (args[0])
         targetDir = args[0];
 
+    console.log('Initializing "package.json"');
     await initPackageJSON();
+
+    console.log('Initializing files');
     await initFiles();
 
+    console.log();
     console.log('Application prepared!');
-    console.log('Run "npm start" to start the development build.');
-    console.log('Run "npm run prod" to start the production build.');
+    console.log(`In "${targetDir}":`);
+    console.log('- run "npm start" to start the development build;');
+    console.log('- run "npm run prod" to start the production build.');
 }
 
 (async () => {
