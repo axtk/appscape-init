@@ -47,6 +47,9 @@ async function initPackageJSON() {
     if (!value.version)
         value.version = '0.0.1';
 
+    if (!value.main)
+        value.main = 'dist/main/index.js';
+
     value.scripts = {
         ...scripts,
         ...(typeof value.scripts === 'object' ? value.scripts : undefined),

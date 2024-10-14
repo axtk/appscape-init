@@ -1,8 +1,8 @@
 import {Router} from 'express';
 import {render} from './render';
 
-export let router = Router();
+export let server = Router();
 
-router.get('/', [
+server.get('/', [
     render(),
 ]);
