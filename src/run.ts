@@ -2,12 +2,12 @@
 import {access, cp, mkdir, readdir, readFile, writeFile} from 'node:fs/promises';
 import {exec} from 'node:child_process';
 import {promisify} from 'node:util';
-import {basename, dirname, join} from 'node:path';
+import {basename, join} from 'node:path';
 import scripts from './scripts.json';
 
 const execAsync = promisify(exec);
 
-let ownDir = dirname(require.resolve('appscape-init/package.json'));
+let ownDir = join(__dirname, '..');
 let targetDir = process.cwd();
 
 const deps = [
