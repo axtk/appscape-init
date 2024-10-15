@@ -11,13 +11,14 @@ let ownDir = dirname(require.resolve('appscape-init/package.json'));
 let targetDir = process.cwd();
 
 const deps = [
+    'appscape',
     'express',
 ];
 
 const devDeps = [
     '@types/express',
     '@types/node',
-    'appscape',
+    'appscape-build',
     'cross-env',
     'nodemon',
     'npm-run-all',
