@@ -1,8 +1,8 @@
 {
     "build": "appscape-build",
     "build-prod": "appscape-build --clean --silent",
-    "clean": "appscape-build --clean-only",
-    "dev": "npm-run-all clean watch",
+    "dev": "npm-run-all init watch",
+    "init": "appscape-build --init",
     "prod": "cross-env NODE_ENV=production APP_HOST=127.0.0.1 APP_PORT=3000 npm-run-all build-prod serve",
     "serve": "node dist/main/index.js",
     "start": "npm run dev",
