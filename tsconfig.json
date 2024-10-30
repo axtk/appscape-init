@@ -1,5 +1,8 @@
 {
-  "include": ["src"],
+  "include": [
+    "src",
+    "node_modules/appscape"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

@@ -76,11 +76,17 @@ async function initFiles() {
     let items = await readdir(join(ownDir, 'demo'));
 
     await Promise.all(
-        items.map(item => cp(
-            join(ownDir, 'demo', item),
-            join(targetDir, item),
-            {recursive: true},
-        )),
+        items.map(item => {
+            let targetItem = item === '_tsconfig.json'
+                ? 'tsconfig.json'
+                : item;
+
+            return cp(
+                join(ownDir, 'demo', item),
+                join(targetDir, targetItem),
+                {recursive: true},
+            );
+        }),
     );
 }
 
