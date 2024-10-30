@@ -96,8 +96,9 @@ export async function run() {
     console.log('Initializing files');
     await initFiles();
 
-    console.log();
     console.log('Application prepared!');
+
+    console.log();
     console.log(`In "${targetDir}":`);
     console.log('- run "npm start" to start the development build;');
     console.log('- run "npm run prod" to start the production build.');
