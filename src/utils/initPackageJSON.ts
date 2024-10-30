@@ -5,11 +5,12 @@ import {basename, join} from 'node:path';
 import {deps} from '../const/deps';
 import {devDeps} from '../const/devDeps';
 import scripts from '../const/scripts.json';
+import type {Config} from '../types/Config';
 import {getJSONTabSize} from './getJSONTabSize';
 
 const execAsync = promisify(exec);
 
-export async function initPackageJSON(targetDir: string) {
+export async function initPackageJSON({targetDir}: Config) {
     let path = join(targetDir, 'package.json');
     let content = '', value: Record<string, unknown> = {};
 

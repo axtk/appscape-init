@@ -1,22 +1,26 @@
 #!/usr/bin/env node
+import {join} from 'node:path';
+import type {Config} from './types/Config';
 import {initFiles} from './utils/initFiles';
 import {initPackageJSON} from './utils/initPackageJSON';
 
 export async function run() {
-    let args = process.argv.slice(2);
-    let targetDir = args[0] || process.cwd();
+    let config: Config = {
+        ownDir: join(__dirname, '..'),
+        targetDir: process.argv[2] || process.cwd(),
+    };
 
     console.log('Initializing "package.json"');
-    await initPackageJSON(targetDir);
+    await initPackageJSON(config);
 
     console.log('Initializing files');
-    await initFiles(targetDir);
+    await initFiles(config);
 
     console.log();
     console.log('Application prepared!');
 
     console.log();
-    console.log(`In "${targetDir}":`);
+    console.log(`In "${config.targetDir}":`);
     console.log('- run "npm start" to start the development build;');
     console.log('- run "npm run prod" to start the production build.');
 }
