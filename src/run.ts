@@ -102,6 +102,7 @@ export async function run() {
     console.log('Initializing files');
     await initFiles();
 
+    console.log();
     console.log('Application prepared!');
 
     console.log();
