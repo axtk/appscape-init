@@ -10,10 +10,8 @@ export async function run() {
         targetDir: process.argv[2] || process.cwd(),
     };
 
-    console.log('Initializing "package.json"');
+    console.log('Initializing application');
     await initPackageJSON(config);
-
-    console.log('Initializing files');
     await initFiles(config);
 
     console.log();
