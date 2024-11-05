@@ -1,10 +1,12 @@
 import {setup, unhandledError, unhandledRoute} from 'appscape';
 import {entries} from './entries';
 
-let app = await setup();
+(async () => {
+    let app = await setup();
 
-app.use(
-    entries,
-    unhandledRoute(),
-    unhandledError(),
-);
+    app.use(
+        entries,
+        unhandledRoute(),
+        unhandledError(),
+    );
+})();
