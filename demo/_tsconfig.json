@@ -4,10 +4,6 @@
     "node_modules/appscape"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./*"]
-    },
     "outDir": "dist",
     "lib": [
       "ESNext",
