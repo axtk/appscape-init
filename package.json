@@ -17,9 +17,9 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/node": "^22.8.4",
-    "appscape": "^0.5.7",
-    "esbuild": "^0.24.0",
+    "@types/node": "^22.10.2",
+    "appscape": "^0.5.13",
+    "esbuild": "^0.24.2",
     "npm-run-all": "^4.1.5"
   }
 }
