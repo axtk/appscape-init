@@ -7,8 +7,18 @@ import {initPackageJSON} from './utils/initPackageJSON';
 export async function run() {
     let config: Config = {
         ownDir: join(__dirname, '..'),
-        targetDir: process.argv[2] || process.cwd(),
+        targetDir: process.cwd(),
+        preset: 'blank',
     };
+
+    for (let i = 2; i < process.argv.length; i++) {
+        let arg = process.argv[i];
+
+        if (/^--(blank|files)$/.test(arg))
+            config.preset = arg.slice(2) as Config['preset'];
+        else if (arg)
+            config.targetDir = arg;
+    }
 
     console.log('Initializing application...');
     await initPackageJSON(config);
