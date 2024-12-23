@@ -1,0 +1,14 @@
+{
+    "dependencies": {
+        "appscape": "*",
+        "express": "*"
+    },
+    "devDependencies": {
+        "@types/express": "*",
+        "@types/node": "*",
+        "appscape-build": "*",
+        "cross-env": "*",
+        "nodemon": "*",
+        "npm-run-all": "*"
+    }
+}

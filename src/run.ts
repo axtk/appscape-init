@@ -1,28 +1,12 @@
 #!/usr/bin/env node
-import {join} from 'node:path';
-import type {Config} from './types/Config';
-import {getPresets} from './utils/getPresets';
+import {getConfig} from './utils/getConfig';
 import {initFiles} from './utils/initFiles';
 import {initPackageJSON} from './utils/initPackageJSON';
 
 export async function run() {
-    let config: Config = {
-        ownDir: join(__dirname, '..'),
-        targetDir: process.cwd(),
-        preset: 'blank',
-    };
+    let config = await getConfig();
 
-    let presets = await getPresets(config);
-
-    for (let i = 2; i < process.argv.length; i++) {
-        let arg = process.argv[i];
-
-        if (presets.some(preset => arg === `--${preset}`))
-            config.preset = arg.slice(2) as Config['preset'];
-        else if (arg)
-            config.targetDir = arg;
-    }
-
+    console.log(`Preset location: ${config.presetDir}`);
     console.log('Initializing application...');
     await initPackageJSON(config);
     await initFiles(config);

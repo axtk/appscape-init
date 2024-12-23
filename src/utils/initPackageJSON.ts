@@ -1,41 +1,54 @@
-import {access, mkdir, readFile, writeFile} from 'node:fs/promises';
+import {access, mkdir, writeFile} from 'node:fs/promises';
+import {basename, join} from 'node:path';
 import {exec} from 'node:child_process';
 import {promisify} from 'node:util';
-import {basename, join} from 'node:path';
-import {deps} from '../const/deps';
-import {devDeps} from '../const/devDeps';
 import scripts from '../const/scripts.json';
 import type {Config} from '../types/Config';
-import {getJSONTabSize} from './getJSONTabSize';
+import {readJSON} from './readJSON';
+import {toDepList} from './toDepList';
 
 const execAsync = promisify(exec);
 
-export async function initPackageJSON({targetDir, preset}: Config) {
-    let path = join(targetDir, 'package.json');
-    let content = '', value: Record<string, unknown> = {};
+type PJ = {
+    name?: string;
+    version?: string;
+    main?: string;
+    scripts?: Record<string, string>;
+    dependencies?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+};
 
-    try {
-        content = (await readFile(path)).toString();
-    }
-    catch {}
+export async function initPackageJSON({targetDir, presetDir}: Config) {
+    let targetPJPath = join(targetDir, 'package.json');
 
-    try {
-        value = JSON.parse(content);
-    }
-    catch {}
+    let {
+        scripts: originalScripts,
+        ...originalPJ
+    } = ((await readJSON(targetPJPath)) ?? {}) as PJ;
 
-    if (!value.name)
-        value.name = basename(targetDir);
+    let {
+        dependencies,
+        devDependencies,
+        peerDependencies,
+        scripts: presetScripts,
+        ...presetPJ
+    } = (
+        (await readJSON(join(presetDir, 'package.json'))) ??
+        (await readJSON(join(presetDir, '_package.json'))) ??
+        {}
+    ) as PJ;
 
-    if (!value.version)
-        value.version = '0.0.1';
-
-    if (!value.main)
-        value.main = 'dist/main/index.js';
-
-    value.scripts = {
-        ...scripts,
-        ...(typeof value.scripts === 'object' ? value.scripts : undefined),
+    let targetPJ: PJ = {
+        name: basename(targetDir),
+        version: '0.0.1',
+        main: 'dist/main/index.js',
+        scripts: {
+            ...(presetScripts ?? scripts),
+            ...(typeof originalScripts === 'object' ? originalScripts : undefined),
+        },
+        ...presetPJ,
+        ...originalPJ,
     };
 
     try {
@@ -46,10 +59,20 @@ export async function initPackageJSON({targetDir, preset}: Config) {
     }
 
     await writeFile(
-        path,
-        JSON.stringify(value, null, getJSONTabSize(content)),
+        targetPJPath,
+        JSON.stringify(targetPJ, null, 2),
     );
 
-    await execAsync(`npm i --prefix ${targetDir} ${deps[preset].join(' ')}`);
-    await execAsync(`npm i -D --prefix ${targetDir} ${devDeps[preset].join(' ')}`);
+    let deps = [
+        ...toDepList(dependencies),
+        ...toDepList(peerDependencies),
+    ];
+
+    let devDeps = toDepList(devDependencies);
+
+    if (deps.length !== 0)
+        await execAsync(`npm i --prefix ${targetDir} ${deps.join(' ')}`);
+
+    if (devDeps.length !== 0)
+        await execAsync(`npm i -D --prefix ${targetDir} ${devDeps.join(' ')}`);
 }
