@@ -14,7 +14,7 @@ export async function run() {
     for (let i = 2; i < process.argv.length; i++) {
         let arg = process.argv[i];
 
-        if (/^--(blank|files)$/.test(arg))
+        if (/^--(blank|files|react-spa)$/.test(arg))
             config.preset = arg.slice(2) as Config['preset'];
         else if (arg)
             config.targetDir = arg;

@@ -10,7 +10,7 @@ import {getJSONTabSize} from './getJSONTabSize';
 
 const execAsync = promisify(exec);
 
-export async function initPackageJSON({targetDir}: Config) {
+export async function initPackageJSON({targetDir, preset}: Config) {
     let path = join(targetDir, 'package.json');
     let content = '', value: Record<string, unknown> = {};
 
@@ -50,6 +50,6 @@ export async function initPackageJSON({targetDir}: Config) {
         JSON.stringify(value, null, getJSONTabSize(content)),
     );
 
-    await execAsync(`npm i --prefix ${targetDir} ${deps.join(' ')}`);
-    await execAsync(`npm i -D --prefix ${targetDir} ${devDeps.join(' ')}`);
+    await execAsync(`npm i --prefix ${targetDir} ${deps[preset].join(' ')}`);
+    await execAsync(`npm i -D --prefix ${targetDir} ${devDeps[preset].join(' ')}`);
 }
