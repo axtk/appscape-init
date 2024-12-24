@@ -2,11 +2,12 @@
 import {getConfig} from './utils/getConfig';
 import {initFiles} from './utils/initFiles';
 import {initPackageJSON} from './utils/initPackageJSON';
+import {truncatePath} from './utils/truncatePath';
 
 export async function run() {
     let config = await getConfig();
 
-    console.log(`Preset location: ${config.presetDir}`);
+    console.log(`Preset: ${truncatePath(config.presetDir)}`);
     console.log('Initializing application...');
     await initPackageJSON(config);
     await initFiles(config);
