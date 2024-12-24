@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "appscape": "*",
+    "express": "*",
+    "groundstate": "*",
+    "isbot": "*",
+    "react": "*",
+    "react-dom": "*",
+    "routescape": "*"
+  },
+  "devDependencies": {
+    "@types/express": "*",
+    "@types/node": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "appscape-build": "*",
+    "cross-env": "*",
+    "nodemon": "*",
+    "npm-run-all": "*"
+  }
+}
