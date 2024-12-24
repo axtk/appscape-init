@@ -1,4 +1,4 @@
-import {A, useRoute} from 'routescape';
+import {useRoute} from 'routescape';
 
 export const Nav = () => {
     let [, withRoute] = useRoute();
@@ -7,13 +7,13 @@ export const Nav = () => {
         <nav>
             <p>
                 {withRoute('/',
-                    <strong>Intro</strong>,
-                    <A href="/">Intro</A>
+                    <span>Intro</span>,
+                    <a href="/">Intro</a>
                 )}
                 {' | '}
                 {withRoute('/about',
-                    <strong>About</strong>,
-                    <A href="/about">About</A>
+                    <span>About</span>,
+                    <a href="/about">About</a>
                 )}
             </p>
         </nav>

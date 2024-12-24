@@ -2,9 +2,10 @@ import {useContext} from 'react';
 import {useStore} from 'groundstate';
 import {useRoute} from 'routescape';
 import {AppContext} from '../AppContext';
-import {Intro} from '../Intro/lazy';
-import {About} from '../About/lazy';
+import {Intro} from '../Intro';
+import {About} from '../About';
 import {Nav} from '../Nav';
+import {Footer} from '../Footer';
 import './index.css';
 
 export const Content = () => {
@@ -21,10 +22,13 @@ export const Content = () => {
                 <link type="image/x-icon" rel="icon" href="/favicon.svg"/>
             </head>
             <body>
-                <Nav/>
-                {withRoute('/', <Intro/>)}
-                {withRoute('/about', <About/>)}
-                <script src="/main/counter.js"/>
+                <div className="layout">
+                    <Nav/>
+                    {withRoute('/', <Intro/>)}
+                    {withRoute('/about', <About/>)}
+                    <Footer/>
+                </div>
+                <script src="/main/-/counter.js"/>
             </body>
         </html>
     );

@@ -7,7 +7,7 @@ import {App} from '../ui/App';
 export const render: Controller = () => {
     return async (req, res) => {
         let appState: AppState = {
-            counter: Math.floor(100*Math.random()),
+            counter: 100 + Math.floor(100*Math.random()),
         };
 
         let bot = isbot(req.get('user-agent'));

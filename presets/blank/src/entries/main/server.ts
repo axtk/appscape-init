@@ -3,6 +3,4 @@ import {render} from './render';
 
 export let server = Router();
 
-server.get('/', [
-    render(),
-]);
+server.get('/', render());

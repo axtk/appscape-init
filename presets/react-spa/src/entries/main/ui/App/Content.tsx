@@ -3,6 +3,7 @@ import {useRoute} from 'routescape';
 import {Intro} from '../Intro/lazy';
 import {About} from '../About/lazy';
 import {Nav} from '../Nav';
+import {Footer} from '../Footer';
 import './index.css';
 
 export const Content = () => {
@@ -32,17 +33,20 @@ export const Content = () => {
                 <link type="image/x-icon" rel="icon" href="/favicon.svg"/>
             </head>
             <body>
-                <Nav/>
-                {withRoute('/', (
-                    <Suspense fallback={suspenseFallback}>
-                        <Intro/>
-                    </Suspense>
-                ))}
-                {withRoute('/about', (
-                    <Suspense fallback={suspenseFallback}>
-                        <About/>
-                    </Suspense>
-                ))}
+                <div className="layout">
+                    <Nav/>
+                    {withRoute('/', (
+                        <Suspense fallback={suspenseFallback}>
+                            <Intro/>
+                        </Suspense>
+                    ))}
+                    {withRoute('/about', (
+                        <Suspense fallback={suspenseFallback}>
+                            <About/>
+                        </Suspense>
+                    ))}
+                    <Footer/>
+                </div>
             </body>
         </html>
     );

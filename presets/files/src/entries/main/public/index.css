@@ -1,4 +1,9 @@
-header, nav, main, footer {
+.layout {
     max-width: 36em;
     margin: 0 auto;
+}
+.counter strong {
+    display: inline-block;
+    min-width: 3em;
+    text-align: center;
 }

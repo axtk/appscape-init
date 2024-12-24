@@ -7,12 +7,12 @@ export const Nav = () => {
         <nav>
             <p>
                 {withRoute('/',
-                    <strong>Intro</strong>,
+                    <span>Intro</span>,
                     <A href="/">Intro</A>
                 )}
                 {' | '}
                 {withRoute('/about',
-                    <strong>About</strong>,
+                    <span>About</span>,
                     <A href="/about">About</A>
                 )}
             </p>

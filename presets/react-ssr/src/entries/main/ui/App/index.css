@@ -1,4 +1,4 @@
-header, nav, main, footer {
+.layout {
     max-width: 36em;
     margin: 0 auto;
 }
