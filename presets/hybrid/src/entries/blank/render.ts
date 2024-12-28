@@ -17,6 +17,8 @@ export const render: Controller = () => {
             '<main><h1>Intro</h1>' +
             '<p>This entry point renders content from a string ' +
             '(blank setup).</p>' +
+            '<p>Standalone installation:<br>' +
+            '<code>npx appscape-init app --blank</code></p>' +
             '</main><footer><hr><p><em>appscape</em></p></footer>' +
             '</div></body></html>\n',
         );
