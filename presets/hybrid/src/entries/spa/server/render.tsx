@@ -28,7 +28,7 @@ export const render: Controller = () => {
             onError(error) {
                 renderingError = error;
             },
-            bootstrapModules: ['/-/spa.js'],
+            bootstrapModules: ['/-/spa/index.js'],
             bootstrapScriptContent: `window._mainState=${serializeState(appState)};`,
             nonce: req.ctx?.nonce,
         });

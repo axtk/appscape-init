@@ -29,7 +29,7 @@ export const Content = () => {
                 <meta charSet="utf-8"/>
                 <meta name="viewport" content="width=device-width"/>
                 <title>App</title>
-                <link rel="stylesheet" href="/-/spa.css"/>
+                <link rel="stylesheet" href="/-/spa/index.css"/>
                 <link type="image/x-icon" rel="icon" href="/favicon.svg"/>
             </head>
             <body>
