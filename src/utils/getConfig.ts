@@ -3,17 +3,33 @@ import {join} from 'node:path';
 import type {Config} from '../types/Config';
 import {getPresets} from './getPresets';
 
-export async function getConfig(): Promise<Config> {
-    let [targetDirArg, presetArg] = process.argv.slice(2);
-    let ownDir = join(__dirname, '..');
+let defaultPreset = 'blank';
 
+export async function getConfig(): Promise<Config> {
+    let args = process.argv.slice(2);
+    let ownDir = join(__dirname, '..');
+    let presets = await getPresets({ownDir});
+
+    if (args.includes('--help')) {
+        let presetList = presets
+            .map(x => `  --${x}${x === defaultPreset ? ' (default)' : ''}`)
+            .join('\n') +
+            '\n  <custom_preset_directory>';
+
+        console.log(
+            'npx appscape-init <target_directory> [<preset>]\n\n' +
+            `<preset>:\n${presetList}`
+        );
+
+        process.exit(0);
+    }
+
+    let [targetDirArg, presetArg] = args;
     let preset: string | null = null;
     let presetDir: string | null = null;
 
     if (presetArg) {
         if (presetArg.startsWith('--')) {
-            let presets = await getPresets({ownDir});
-
             preset = presetArg.slice(2);
 
             if (!presets.includes(preset))
@@ -25,7 +41,7 @@ export async function getConfig(): Promise<Config> {
     }
 
     if (!presetDir)
-        presetDir = join(ownDir, 'presets', preset ?? 'blank');
+        presetDir = join(ownDir, 'presets', preset ?? defaultPreset);
 
     try {
         await access(presetDir);
