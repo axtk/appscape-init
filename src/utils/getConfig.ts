@@ -3,7 +3,7 @@ import {join} from 'node:path';
 import type {Config} from '../types/Config';
 import {getPresets} from './getPresets';
 
-let defaultPreset = 'blank';
+let defaultPreset = 'hybrid';
 
 export async function getConfig(): Promise<Config> {
     let args = process.argv.slice(2);
