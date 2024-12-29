@@ -1,10 +1,11 @@
 {
     "build": "appscape-build",
-    "dev": "npm-run-all dev-init dev-watch",
-    "dev-init": "appscape-build --init",
+    "dev": "npm-run-all dev-init init-entries dev-watch",
+    "dev-init": "appscape-build --init --clean",
     "dev-rebuild": "appscape-build --skip-init",
     "dev-watch": "nodemon --watch src -e * --ignore **/public/** --exec \"cross-env NODE_ENV=development npm-run-all dev-rebuild serve\"",
-    "prod": "cross-env NODE_ENV=production APP_HOST=127.0.0.1 APP_PORT=3000 npm-run-all prod-build serve",
+    "init-entries": "node dist/entries/init.js",
+    "prod": "cross-env NODE_ENV=production APP_HOST=127.0.0.1 APP_PORT=3000 npm-run-all prod-build init-entries serve",
     "prod-build": "appscape-build --clean --silent",
     "serve": "node dist/main/index.js",
     "start": "npm run dev"
