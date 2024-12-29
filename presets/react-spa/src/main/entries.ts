@@ -1,2 +1,1 @@
-export const server = [];
-export function init() {}
+export let entries = [];

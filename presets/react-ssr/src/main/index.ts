@@ -1,10 +1,10 @@
 import {setup, unhandledError, unhandledRoute} from 'appscape';
-import {server, init} from './entries';
+import {entries} from './entries';
 
-let app = setup(init);
+let app = setup();
 
 app.use(
-    server,
+    entries,
     unhandledRoute(),
     unhandledError(),
 );
