@@ -4,8 +4,17 @@ import {Controller, serializeState, servePipeableStream} from 'appscape';
 import type {AppState} from '../types/AppState';
 import {App} from '../ui/App';
 
+const allowedSections = new Set([undefined, 'about']);
+
 export const render: Controller = () => {
     return async (req, res) => {
+        if (!allowedSections.has(req.params.section)) {
+            res.status(404).send(
+                await req.app.renderStatus?.(req, res, 'unknown_section'),
+            );
+            return;
+        }
+
         let appState: AppState = {
             counter: 100 + Math.floor(100*Math.random()),
         };

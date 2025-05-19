@@ -3,4 +3,4 @@ import {render} from './render';
 
 export let server = Router();
 
-server.get('/spa/:section(about)?', render());
+server.get('/spa{/:section}', render());

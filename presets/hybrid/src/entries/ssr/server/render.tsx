@@ -4,6 +4,8 @@ import {Controller, servePipeableStream} from 'appscape';
 import type {AppState} from '../types/AppState';
 import {App} from '../ui/App';
 
+const allowedSections = new Set([undefined, 'about']);
+
 const titleMap: Record<string, string> = {
     'intro': 'Intro',
     'about': 'About',
@@ -11,6 +13,13 @@ const titleMap: Record<string, string> = {
 
 export const render: Controller = () => {
     return async (req, res) => {
+        if (!allowedSections.has(req.params.section)) {
+            res.status(404).send(
+                await req.app.renderStatus?.(req, res, 'unknown_section'),
+            );
+            return;
+        }
+
         let appState: AppState = {
             title: titleMap[req.params.section ?? 'intro'] ?? 'App',
             counter: 100 + Math.floor(100*Math.random()),

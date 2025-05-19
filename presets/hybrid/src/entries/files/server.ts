@@ -5,7 +5,7 @@ export let server = Router();
 
 server.use('/files/-', expressStatic('src/entries/files/public'));
 
-server.get('/files/:name?', dir({
+server.get('/files{/:name}', dir({
     path: 'src/entries/files/content',
     index: 'intro',
 }));
