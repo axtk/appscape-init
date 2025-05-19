@@ -1,6 +1,6 @@
 {
   "name": "appscape-init",
-  "version": "0.5.9",
+  "version": "0.5.10",
   "description": "",
   "main": "dist/run.js",
   "bin": {
