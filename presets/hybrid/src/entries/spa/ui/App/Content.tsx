@@ -1,27 +1,23 @@
-import {Suspense, useEffect} from 'react';
-import {useRoute} from 'routescape';
+import {Suspense} from 'react';
+import {useNavigationComplete, useRoute} from 'routescape';
 import {Intro} from '../Intro/lazy';
 import {About} from '../About/lazy';
 import {Nav} from '../Nav';
 import {Footer} from '../Footer';
 import './index.css';
 
+function setTitle(href: string) {
+    if (href === '/spa')
+        document.title = 'Intro';
+    else if (href === '/spa/about')
+        document.title = 'About';
+}
+
 export const Content = () => {
-    let [route, withRoute] = useRoute();
+    let [, withRoute] = useRoute();
     let suspenseFallback = <main><p>Loading...</p></main>;
 
-    useEffect(() => {
-        let setTitle = () => {
-            if (route.matches('/spa'))
-                document.title = 'Intro';
-            else if (route.matches('/spa/about'))
-                document.title = 'About';
-        };
-
-        setTitle();
-
-        return route.subscribe(setTitle);
-    }, [route]);
+    useNavigationComplete(setTitle);
 
     return (
         <html lang="en">
