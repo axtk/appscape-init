@@ -10,7 +10,7 @@ import './index.css';
 
 export const Content = () => {
     let [state] = useStore(useContext(AppContext));
-    let [, withRoute] = useRoute();
+    let {withRoute} = useRoute();
 
     return (
         <html lang="en">

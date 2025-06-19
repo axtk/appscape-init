@@ -14,7 +14,7 @@ function setTitle(href: string) {
 }
 
 export const Content = () => {
-    let [, withRoute] = useRoute();
+    let {withRoute} = useRoute();
     let suspenseFallback = <main><p>Loading...</p></main>;
 
     useNavigationComplete(setTitle);

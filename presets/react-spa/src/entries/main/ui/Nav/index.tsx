@@ -1,7 +1,7 @@
 import {A, useRoute} from 'routescape';
 
 export const Nav = () => {
-    let [, withRoute] = useRoute();
+    let {withRoute} = useRoute();
 
     return (
         <nav>
